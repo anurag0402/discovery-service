@@ -1,0 +1,7 @@
+openapi: 3.0.1
+info:
+  title: Discovery Service API
+  description: API documentation for Discovery (Eureka) Service
+  version: 1.0.0
+servers:
+  - url: http://localhost:8761 
