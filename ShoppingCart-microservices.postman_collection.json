@@ -1,0 +1,159 @@
+{
+  "info": {
+    "_postman_id": "shoppingcart-microservices-collection",
+    "name": "ShoppingCart Microservices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Service",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password\",\n  \"role\": \"USER\"\n}"
+            },
+            "url": { "raw": "http://localhost:8081/api/users", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "users"] }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8081/api/users", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "users"] } }
+        },
+        {
+          "name": "Get User By ID",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8081/api/users/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "users", "{{userId}}"] } }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"updateduser\",\n  \"email\": \"updated@example.com\",\n  \"password\": \"newpassword\",\n  \"role\": \"ADMIN\"\n}" },
+            "url": { "raw": "http://localhost:8081/api/users/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "users", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": { "method": "DELETE", "url": { "raw": "http://localhost:8081/api/users/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "users", "{{userId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "Product Service",
+      "item": [
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sample Product\",\n  \"description\": \"A product\",\n  \"price\": 10.99,\n  \"quantity\": 100\n}"
+            },
+            "url": { "raw": "http://localhost:8082/api/products", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "products"] }
+          }
+        },
+        {
+          "name": "Get All Products",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8082/api/products", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "products"] } }
+        },
+        {
+          "name": "Get Product By ID",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8082/api/products/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "products", "{{productId}}"] } }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Updated Product\",\n  \"description\": \"Updated description\",\n  \"price\": 19.99,\n  \"quantity\": 50\n}" },
+            "url": { "raw": "http://localhost:8082/api/products/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "products", "{{productId}}"] }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": { "method": "DELETE", "url": { "raw": "http://localhost:8082/api/products/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "products", "{{productId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "Cart Service",
+      "item": [
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 1,\n  \"price\": 10.99\n}"
+            },
+            "url": { "raw": "http://localhost:8083/api/cart", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "cart"] }
+          }
+        },
+        {
+          "name": "Get Cart Items by User",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8083/api/cart/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "cart", "{{userId}}"] } }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 2,\n  \"price\": 20.99\n}" },
+            "url": { "raw": "http://localhost:8083/api/cart/{{cartItemId}}", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "cart", "{{cartItemId}}"] }
+          }
+        },
+        {
+          "name": "Remove Cart Item",
+          "request": { "method": "DELETE", "url": { "raw": "http://localhost:8083/api/cart/item/{{cartItemId}}", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "cart", "item", "{{cartItemId}}"] } }
+        },
+        {
+          "name": "Clear Cart for User",
+          "request": { "method": "DELETE", "url": { "raw": "http://localhost:8083/api/cart/user/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "cart", "user", "{{userId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "Gateway Service",
+      "item": [
+        {
+          "name": "User Service via Gateway - Get All",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8080/api/users", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users"] } }
+        },
+        {
+          "name": "User Service via Gateway - Get By ID",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8080/api/users/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "users", "{{userId}}"] } }
+        },
+        {
+          "name": "Product Service via Gateway - Get All",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8080/api/products", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "products"] } }
+        },
+        {
+          "name": "Product Service via Gateway - Get By ID",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8080/api/products/{{productId}}", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "products", "{{productId}}"] } }
+        },
+        {
+          "name": "Cart Service via Gateway - Get Cart by User",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8080/api/cart/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "cart", "{{userId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "Discovery Service",
+      "item": [
+        {
+          "name": "Eureka Dashboard",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:8761", "protocol": "http", "host": ["localhost"], "port": "8761" } }
+        }
+      ]
+    }
+  ]
+} 
