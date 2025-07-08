@@ -2,7 +2,54 @@ version: '3.8'
 
 services:
 
-  ## MongoDB (shared by all services that use it)
+  user-service:
+    build: ../user-service     # or absolute: D:/Migrate_Microservices/user-service
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    networks:
+      - springnet
+    depends_on:
+      - discovery-service
+
+  product-service:
+    build: ../product-service
+    container_name: product-service
+    ports:
+      - "8082:8082"
+    networks:
+      - springnet
+    depends_on:
+      - discovery-service
+
+  cart-service:
+    build: ../cart-service
+    container_name: cart-service
+    ports:
+      - "8083:8083"
+    networks:
+      - springnet
+    depends_on:
+      - discovery-service
+
+  gateway-service:
+    build: ../gateway-service
+    container_name: gateway-service
+    ports:
+      - "8080:8080"
+    networks:
+      - springnet
+    depends_on:
+      - discovery-service
+
+  discovery-service:
+    build: ../discovery-service
+    container_name: discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - springnet
+
   mongodb:
     image: mongo:6.0
     container_name: mongodb
@@ -13,73 +60,8 @@ services:
     networks:
       - springnet
 
-  ## Discovery Service (Eureka)
-  discovery-service:
-    build: ./discovery-service
-    container_name: discovery-service
-    ports:
-      - "8761:8761"
-    networks:
-      - springnet
-    depends_on:
-      - mongodb
-
-  ## API Gateway
-  gateway-service:
-    build: ./gateway-service
-    container_name: gateway-service
-    ports:
-      - "8080:8080"
-    depends_on:
-      - discovery-service
-    networks:
-      - springnet
-
-  ## User Service
-  user-service:
-    build: ./user-service
-    container_name: user-service
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/userdb
-    depends_on:
-      - discovery-service
-      - mongodb
-    networks:
-      - springnet
-
-  ## Product Service
-  product-service:
-    build: ./product-service
-    container_name: product-service
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/productdb
-    depends_on:
-      - discovery-service
-      - mongodb
-    networks:
-      - springnet
-
-  ## Cart Service
-  cart-service:
-    build: ./cart-service
-    container_name: cart-service
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/cartdb
-    depends_on:
-      - discovery-service
-      - mongodb
-    networks:
-      - springnet
+networks:
+  springnet:
 
 volumes:
   mongo_data:
-
-networks:
-  springnet:
-    driver: bridge
